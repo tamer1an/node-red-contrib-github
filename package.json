@@ -3,8 +3,24 @@
   "version": "0.1.5",
   "description": "Github for node-red",
   "main": "node-red-contrib-github.js",
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "@types/lodash": "^4.14.123",
+    "@types/node": "^11.13.4",
+    "@types/react": "^16.8.13",
+    "@types/react-dom": "^16.8.4",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^2.1.8",
+    "sinon": "^7.3.1",
+    "typescript": "^3.4.3",
+    "lodash": "^4.17.11",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "jest-enzyme": "^7.0.2"
+  },
   "dependencies": {
-    "github-api": "0.x"
+    "github-api": "3.x"
   },
   "node-red": {
     "nodes": {
@@ -12,7 +28,11 @@
     }
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "coverage": "npm test -- --coverage",
+    "eject": "react-scripts eject"
   },
   "repository": {
     "type": "git",
@@ -25,13 +45,19 @@
     "iot"
   ],
   "author": {
-    "name": "Stefan W",
-    "email": "scaw.dev@gmail.com",
+    "name": "Stefan W; Andrii Trybynenko",
+    "email": "scaw.dev@gmail.com; tamerjlah@gmail.com",
     "url": "https://github.com/StefanWerW/"
   },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/StefanWerW/node-red-contrib-github/issues"
   },
-  "homepage": "https://github.com/StefanWerW/node-red-contrib-github#readme"
+  "homepage": "https://github.com/StefanWerW/node-red-contrib-github#readme",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
