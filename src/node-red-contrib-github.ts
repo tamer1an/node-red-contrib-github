@@ -1,13 +1,13 @@
-import {Red} from 'node-red';
+import {NodeProperties, Red} from 'node-red';
 
 module.exports = function(RED: Red) {
   'use strict';
 
-  function GithubNode(n: {name: string}) {
+  function GithubNode(n: NodeProperties) {
     // @ts-ignore
-    RED.nodes.createNode(this, n);
-    // @ts-ignore
-    this.name = n.name;
+    const node: any = this;
+    RED.nodes.createNode(node, n);
+    node.name = n.name;
   }
 
   RED.nodes.registerType('github-credentials', GithubNode, {
@@ -16,7 +16,6 @@ module.exports = function(RED: Red) {
     }
   });
 
-  //REPO NODE
   // @ts-ignore
   function GithubRepo(n) {
     // @ts-ignore
@@ -170,7 +169,6 @@ module.exports = function(RED: Red) {
         const username_f = RED.util.evaluateNodeProperty(node.username, node.usernameType, node, msg);
         user.userGists(username_f, callbackErrData);
       }
-
     });
   }
 
