@@ -1,5 +1,5 @@
 // @ts-ignore
-import GitHub from 'github-api';
+import * as GitHub from 'github-api';
 import {object, string} from "prop-types";
 
 const local = { log: (msg: any, msg2?: any) => {} };
@@ -12,17 +12,17 @@ class GithubInterface {
   static newGit(username: string, password: string, token?: string, baseUrl = 'https://api.github.com') {
     let gh;
     if (token) {
-      gh = new GitHub({
+      gh = {
         auth: 'oauth',
         token,
-      }, baseUrl);
+      };
     } else {
-      gh = new GitHub({
+      gh = {
         username,
         password,
-      }, baseUrl);
+      };
     }
-    return gh;
+    return new GitHub.default(gh, baseUrl);
   }
 
   static defaultProps = {
