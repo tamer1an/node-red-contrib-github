@@ -1,5 +1,5 @@
-import {NodeProperties, Red} from 'node-red';
-import GithubInterface from './Github';
+import { NodeProperties, Red } from 'node-red';
+import { GithubInterface } from './lib/Github';
 
 module.exports = function(RED: Red) {
   'use strict';

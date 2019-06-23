@@ -315,4 +315,4 @@ class GithubInterface {
   }
 }
 
-export default GithubInterface;
+export { GithubInterface };

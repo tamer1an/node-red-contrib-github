@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+var Github_1 = require("./lib/Github");
 module.exports = function (RED) {
     'use strict';
     function GithubNode(n) {
@@ -129,6 +130,8 @@ module.exports = function (RED) {
             auth: 'oauth'
         });
         var user = github.getUser();
+        // node.status({});
+        // const github = new GithubInterface();
         node.on('input', function (msg) {
             function callbackErrData(err, data) {
                 if (err) {
@@ -180,4 +183,74 @@ module.exports = function (RED) {
         });
     }
     RED.nodes.registerType('github-user', GithubUser);
+    function GithubMyUser(n) {
+        // @ts-ignore
+        var node = this;
+        RED.nodes.createNode(node, n);
+        node.action = n.action;
+        node.options = n.options;
+        node.optionsType = n.optionsType;
+        node.username = n.username;
+        node.usernameType = n.usernameType;
+        node.orgname = n.orgname;
+        node.orgnameType = n.orgnameType;
+        // @ts-ignore
+        var gi = new Github_1.GithubInterface({
+            // @ts-ignore
+            token: RED.nodes.getNode(n.github).credentials.token
+        });
+        var github = gi.getGit();
+        var user = github.getUser();
+        // node.status({});
+        node.on('input', function (msg) {
+            function callbackErrData(err, data) {
+                if (err) {
+                    node.error(err);
+                }
+                else {
+                    msg.payload = data;
+                    node.send(msg);
+                }
+            }
+            if (node.action === 'repos') {
+                var options_f = RED.util.evaluateNodeProperty(node.options, node.optionsType, node, msg);
+                user.repos(options_f, callbackErrData);
+            }
+            else if (node.action === 'orgs') {
+                user.orgs(callbackErrData);
+            }
+            else if (node.action === 'gists') {
+                user.gists(callbackErrData);
+            }
+            else if (node.action === 'notifications') {
+                var options_f = RED.util.evaluateNodeProperty(node.options, node.optionsType, node, msg);
+                user.notifications(options_f, callbackErrData);
+            }
+            else if (node.action === 'show') {
+                var username_f = RED.util.evaluateNodeProperty(node.username, node.usernameType, node, msg);
+                user.show(username_f, callbackErrData);
+            }
+            else if (node.action === 'userrepos') {
+                var username_f = RED.util.evaluateNodeProperty(node.username, node.usernameType, node, msg);
+                user.userRepos(username_f, callbackErrData);
+            }
+            else if (node.action === 'userstarred') {
+                var username_f = RED.util.evaluateNodeProperty(node.username, node.usernameType, node, msg);
+                user.userStarred(username_f, callbackErrData);
+            }
+            else if (node.action === 'createrepo') {
+                var options_f = RED.util.evaluateNodeProperty(node.options, node.optionsType, node, msg);
+                user.createRepo(options_f, callbackErrData);
+            }
+            else if (node.aciton === 'orgrepos') {
+                var orgname_f = RED.util.evaluateNodeProperty(node.orgname, node.orgnameType, node, msg);
+                user.orgRepos(orgname_f, callbackErrData);
+            }
+            else if (node.action === 'usergists') {
+                var username_f = RED.util.evaluateNodeProperty(node.username, node.usernameType, node, msg);
+                user.userGists(username_f, callbackErrData);
+            }
+        });
+    }
+    RED.nodes.registerType('github-myuser', GithubMyUser);
 };
