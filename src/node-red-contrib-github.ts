@@ -1,19 +1,20 @@
-import { NodeProperties, Red } from 'node-red';
-import { GithubInterface } from './lib/Github';
+import { NodeProperties, Red, Node } from 'node-red';
+import { GithubInterface } from './lib/gh/Github';
 
 module.exports = function(RED: Red) {
   'use strict';
 
   function GithubNode(n: NodeProperties) {
     // @ts-ignore
-    const node: any = this;
+    const node: Node = this;
     RED.nodes.createNode(node, n);
     node.name = n.name;
   }
   RED.nodes.registerType('github-credentials', GithubNode, {
     credentials: {
-      token: {type: 'password'}
-    }
+      token: {type: 'password'},
+      password: {type: 'password'},
+    },
   });
 
   // @ts-ignore
@@ -36,11 +37,12 @@ module.exports = function(RED: Red) {
     node.contentsType = n.contentsType;
     node.pathto = n.pathto;
     node.pathtoType = n.pathtoType;
-    const github = new (require('github-api'))({
-    // @ts-ignore
+      // @ts-ignore
+    const IGithub = new GithubInterface({
+      // @ts-ignore
       token: RED.nodes.getNode(n.github).credentials.token,
-      auth: 'oauth'
     });
+    const github = IGithub.gh;
     node.status({});
     node.on('input', function(msg: { payload: object }) {
       node.status({fill: 'blue', shape: 'ring', text: node.action});
@@ -110,7 +112,7 @@ module.exports = function(RED: Red) {
 
   function GithubUser(n: any) {
     // @ts-ignore
-    const node = this;
+    const node: Node<any> = this;
     RED.nodes.createNode(node, n);
 
     node.action = n.action;
@@ -121,11 +123,12 @@ module.exports = function(RED: Red) {
     node.orgname = n.orgname;
     node.orgnameType = n.orgnameType;
 
-    const github = new (require('github-api'))({
+      // @ts-ignore
+    const IGithub = new GithubInterface({
       // @ts-ignore
       token: RED.nodes.getNode(n.github).credentials.token,
-      auth: 'oauth'
     });
+    const github = IGithub.gh;
     const user = github.getUser();
 
     // node.status({});
@@ -187,12 +190,12 @@ module.exports = function(RED: Red) {
     node.orgname = n.orgname;
     node.orgnameType = n.orgnameType;
     // @ts-ignore
-    const gi = new GithubInterface({
+    const IGithub = new GithubInterface({
     // @ts-ignore
       token: RED.nodes.getNode(n.github).credentials.token,
     });
 
-    const github = gi.getGit();
+    const github = IGithub.gh;
     const user = github.getUser();
 
     // node.status({});

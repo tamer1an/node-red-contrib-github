@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var Github_1 = require("./lib/Github");
+var Github_1 = require("./lib/gh/Github");
 module.exports = function (RED) {
     'use strict';
     function GithubNode(n) {

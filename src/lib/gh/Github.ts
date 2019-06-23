@@ -22,7 +22,7 @@ class GithubInterface {
         password,
       };
     }
-    return new GitHub.default(gh, baseUrl);
+    return new GitHub(gh, baseUrl);
   }
 
   static defaultProps = {
