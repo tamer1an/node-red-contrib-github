@@ -10,24 +10,25 @@
       <input type="text" id="node-config-input-token">
     </div>
 </script>
-
 <script type="text/javascript">
     RED.nodes.registerType('github-credentials',{
       defaults: {
-        name: {value:"", required: true}
+        name: {value:"", required: true},
+        username: {value:"", required: true},
       },
       category: 'config',
       credentials: {
-        token: {type: "password", required: true}
+        token: {type: "password", required: true},
+        password: {type: "password"},
       },
       label: function() {
         return this.name;
       },
-      exportable: false
+      exportable: false,
     });
 </script>
 
-<!-- REPO Node -->
+<!-- REPO Node1 -->
 <script type="text/x-red" data-template-name="github-repo">
     <div class="form-row">
           <label for="node-input-github"><i class="fa fa-key"></i> <span data-i18n="github.label.github-id"></span></label>
@@ -83,11 +84,9 @@
         </div>
     </div>
 </script>
-
 <script type="text/x-red" data-help-name="github-repo">
     <p>A simple node to create a github</p>
 </script>
-
 <script type="text/javascript">
     function oneditprepare() {
         var defaults = this;
@@ -169,7 +168,7 @@
     });
 </script>
 
-<!-- REPO Node -->
+<!-- REPO Node2 -->
 <script type="text/x-red" data-template-name="github-user">
     <div class="form-row">
         <label for="node-input-github"><i class="fa fa-key"></i> <span data-i18n="github.label.github-id"></span></label>
@@ -209,12 +208,9 @@
         <input type="hidden" id="node-input-orgnameType">
     </div>
 </script>
-
-
 <script type="text/x-red" data-help-name="github-user">
     <p>A node to manipulate user infos and repos</p>
 </script>
-
 <script type="text/javascript">
     function oneditprepare() {
         var defaults = this;

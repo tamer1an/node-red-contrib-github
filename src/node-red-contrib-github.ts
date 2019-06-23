@@ -1,4 +1,5 @@
 import {NodeProperties, Red} from 'node-red';
+//import GithubInterface from './Github';
 
 module.exports = function(RED: Red) {
   'use strict';
@@ -9,7 +10,6 @@ module.exports = function(RED: Red) {
     RED.nodes.createNode(node, n);
     node.name = n.name;
   }
-
   RED.nodes.registerType('github-credentials', GithubNode, {
     credentials: {
       token: {type: 'password'}
@@ -42,7 +42,6 @@ module.exports = function(RED: Red) {
       auth: 'oauth'
     });
     node.status({});
-
     node.on('input', function(msg: { payload: object }) {
       node.status({fill: 'blue', shape: 'ring', text: node.action});
       const username_f = RED.util.evaluateNodeProperty(node.username, node.usernameType, node, msg);
@@ -107,9 +106,7 @@ module.exports = function(RED: Red) {
       }
     });
   }
-
   RED.nodes.registerType('github-repo', GithubRepo);
-
 
   function GithubUser(n: any) {
     // @ts-ignore
@@ -130,6 +127,10 @@ module.exports = function(RED: Red) {
       auth: 'oauth'
     });
     const user = github.getUser();
+
+    // node.status({});
+    // const github = new GithubInterface();
+
     node.on('input', function(msg: { payload: object }) {
       function callbackErrData(err: Error, data: object) {
         if(err) {
@@ -171,6 +172,5 @@ module.exports = function(RED: Red) {
       }
     });
   }
-
   RED.nodes.registerType('github-user', GithubUser);
 };
