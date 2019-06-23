@@ -9,24 +9,34 @@ class GithubInterface {
   // @ts-ignore
   _gh: object;
 
-  static newGit(username: string, password: string, baseUrl = 'https://api.github.com') {
-    return new GitHub({
-      username,
-      password,
-    }, baseUrl);
+  static newGit(username: string, password: string, token?: string, baseUrl = 'https://api.github.com') {
+    let gh;
+    if (token) {
+      gh = new GitHub({
+        auth: 'oauth',
+        token,
+      }, baseUrl);
+    } else {
+      gh = new GitHub({
+        username,
+        password,
+      }, baseUrl);
+    }
+    return gh;
   }
 
   static defaultProps = {
     username: 'tamer1an',
     reponame: 'react-app-submodule ',
-  }
+  };
 
-  constructor(config: {username: string, password: string} = {username: 'default', password: 'default'}) {
-    this.user = {};
-
-    const gh = (config.username && config.password)
-      ? this.setGit(GithubInterface.newGit(config.username, config.password))
-      : { error: 'Error auth' };
+  constructor(config: {username: string, password: string, token?: string}) {
+   this.user = {};
+   // @ts-ignore
+    const gh = (config.username && config.password || token)
+   // @ts-ignore
+        ? this.setGit(GithubInterface.newGit(config.username, config.password, token))
+        : { error: 'Error auth' };
 
     // @ts-ignore
     return {
