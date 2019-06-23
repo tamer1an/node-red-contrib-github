@@ -196,7 +196,6 @@ module.exports = function(RED: Red) {
     const user = github.getUser();
 
     // node.status({});
-
     node.on('input', function(msg: { payload: object }) {
       function callbackErrData(err: Error, data: object) {
         if(err) {
@@ -238,5 +237,5 @@ module.exports = function(RED: Red) {
       }
     });
   }
-  RED.nodes.registerType('github-my-user', GithubMyUser);
+  RED.nodes.registerType('github-myuser', GithubMyUser);
 };

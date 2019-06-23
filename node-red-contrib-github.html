@@ -9,6 +9,11 @@
       <label for="node-config-input-token"><i class="fa fa-key"></i> <span data-i18n="github.label.config.token"></span></label>
       <input type="text" id="node-config-input-token">
     </div>
+
+    <div class="form-row">
+      <label for="node-config-input-password"><i class="fa fa-key"></i> <span data-i18n="github.label.config.password"></span></label>
+      <input type="text" id="node-config-input-password">
+    </div>
 </script>
 <script type="text/javascript">
     RED.nodes.registerType('github-credentials',{
@@ -272,7 +277,7 @@
 </script>
 
 <!-- MYUSER Node3 -->
-<script type="text/x-red" data-template-name="github-my-user">
+<script type="text/x-red" data-template-name="github-myuser">
     <div class="form-row">
         <label for="node-input-github"><i class="fa fa-key"></i> <span data-i18n="github.label.github-id"></span></label>
         <input type="text" id="node-input-github">
@@ -311,7 +316,7 @@
         <input type="hidden" id="node-input-orgnameType">
     </div>
 </script>
-<script type="text/x-red" data-help-name="github-my-user">
+<script type="text/x-red" data-help-name="github-myuser">
     <p>A node to manipulate user infos and repos</p>
 </script>
 <script type="text/javascript">
@@ -345,7 +350,7 @@
     this.outputs = $("#node-input-action option:selected").attr("outputs");
   }
 
-  RED.nodes.registerType('github-user',{
+  RED.nodes.registerType('github-myuser',{
     defaults: {
       github: { type:"github-credentials",required:true},
       name: { value: ""},
@@ -367,7 +372,7 @@
       return this.name||"User";
     },
     paletteLabel: function(){
-      return "github user";
+      return "github self";
     },
     oneditprepare: oneditprepare,
     oneditsave: oneditsave

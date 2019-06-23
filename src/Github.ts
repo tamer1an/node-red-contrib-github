@@ -32,10 +32,8 @@ class GithubInterface {
 
   constructor(config: {username: string, password: string, token?: string}) {
    this.user = {};
-   // @ts-ignore
-    const gh = (config.username && config.password || token)
-   // @ts-ignore
-        ? this.setGit(GithubInterface.newGit(config.username, config.password, token))
+    const gh = (config.username && config.password || config.token)
+        ? this.setGit(GithubInterface.newGit(config.username, config.password, config.token))
         : { error: 'Error auth' };
 
     // @ts-ignore
