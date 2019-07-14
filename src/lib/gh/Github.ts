@@ -8,6 +8,7 @@ class GithubInterface {
   user: object;
   // @ts-ignore
   _gh: object;
+  gh: object;
 
   static newGit(username: string, password: string, token?: string, baseUrl = 'https://api.github.com') {
     let gh;
@@ -30,11 +31,14 @@ class GithubInterface {
     reponame: 'react-app-submodule ',
   };
 
-  constructor(config: {username: string, password: string, token?: string}) {
+  constructor(config: {username?: string, password?: string, token?: string}) {
    this.user = {};
-    const gh = (config.username && config.password || config.token)
-        ? this.setGit(GithubInterface.newGit(config.username, config.password, config.token))
-        : { error: 'Error auth' };
+   const password = config.password || null;
+   const username = config.username || null;
+
+
+   const gh = this.setGit(GithubInterface.newGit(username, password, config.token));
+   this._gh = gh;
 
     // @ts-ignore
     return {
