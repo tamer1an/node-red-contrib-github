@@ -1,6 +1,7 @@
 // @ts-ignore
 import * as GitHub from 'github-api';
 import {object, string} from "prop-types";
+const fetch = require('node-fetch');
 
 const local = { log: (msg: any, msg2?: any) => {} };
 
@@ -35,8 +36,6 @@ class GithubInterface {
    this.user = {};
    const password = config.password || null;
    const username = config.username || null;
-
-
    const gh = this.setGit(GithubInterface.newGit(username, password, config.token));
    this._gh = gh;
 
@@ -55,9 +54,34 @@ class GithubInterface {
   async getAllUsersOrganizations() {
     return await Promise.all([
       this.allOrganizations(0),
-      this.allOrganizations(420),
-      this.allOrganizations(1115),
+      this.allOrganizations(444),
+      this.allOrganizations(1111),
     ]);
+  }
+
+  // @ts-ignore
+  allStars(page = 500, user = this.getUser(), pthen = responseText => {
+    const resp = typeof responseText === 'string' ? JSON.parse(responseText) : responseText;
+    local.log(resp);
+    return resp;
+  }, pcatch = (err: any) => local.log(err)) {
+    return fetch(`${user.__apiBase}/users/tamer1an/starred?type=all&sort=updated&per_page=${page}`, {
+      mode: 'cors',
+      method: 'GET',
+      headers: {
+        Authorization: user.__authorizationHeader,
+        Accept: 'application/json',
+        'Accept-Encoding': 'gzip, deflate, sdch, br',
+        'Accept-Language': 'en-GB,en-US;q=0.8,en;q=0.6',
+        Connection: 'keep-alive',
+        Host: 'github.com',
+        Origin: 'http://localhost:8888',
+        Referer: 'http://localhost:8888/dev/',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36' +
+            '(KHTML, like Gecko) Chrome/54.0.2832.2 Safari/537.36',
+        'Content-Type': 'application/json',
+      },
+    }).then(response => response.json()).then(pthen).catch(pcatch);
   }
 
   // @ts-ignore
@@ -71,7 +95,7 @@ class GithubInterface {
       method: 'GET',
       headers: {
         Authorization: user.__authorizationHeader,
-        Accept: 'application/vnd.github.luke-cage-preview+json',
+        Accept: 'application/json',
         'Accept-Encoding': 'gzip, deflate, sdch, br',
         'Accept-Language': 'en-GB,en-US;q=0.8,en;q=0.6',
         Connection: 'keep-alive',
@@ -217,7 +241,7 @@ class GithubInterface {
       method: 'GET',
       headers: {
         Authorization: user.__authorizationHeader,
-        Accept: 'application/vnd.github.luke-cage-preview+json',
+        Accept: 'application/json',
         Connection: 'keep-alive',
         Host: 'github.com',
         Origin: 'http://localhost:8888',
@@ -257,7 +281,7 @@ class GithubInterface {
       body: JSON.stringify(protectionOptions),
       headers: {
         Authorization: user.__authorizationHeader,
-        Accept: 'application/vnd.github.luke-cage-preview+json',
+        Accept: 'application/json',
         Connection: 'keep-alive',
         Host: 'github.com',
         Origin: 'http://localhost:8888',
@@ -280,7 +304,7 @@ class GithubInterface {
       method: 'GET',
       headers: {
         Authorization: user.__authorizationHeader,
-        Accept: 'application/vnd.github.luke-cage-preview+json',
+        Accept: 'application/json',
         'Accept-Encoding': 'gzip, deflate, sdch, br',
         'Accept-Language': 'en-GB,en-US;q=0.8,en;q=0.6',
         Connection: 'keep-alive',

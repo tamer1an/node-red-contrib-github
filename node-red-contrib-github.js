@@ -107,12 +107,11 @@ module.exports = function (RED) {
             // @ts-ignore
             token: RED.nodes.getNode(n.github).credentials.token
         });
-        var github = IGithub.gh;
         node.on('input', function (msg) {
             return __awaiter(this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
                     // @ts-ignore
-                    user.processUserNode(node, RED, msg, github);
+                    user.processUserNode(node, RED, msg, IGithub);
                     return [2 /*return*/];
                 });
             });

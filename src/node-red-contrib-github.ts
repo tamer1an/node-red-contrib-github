@@ -79,11 +79,9 @@ module.exports = function(RED: any) {
       // @ts-ignore
       token: RED.nodes.getNode(n.github).credentials.token,
     });
-    const github: any = IGithub.gh;
-
     node.on('input', async function(msg: { payload: object }) {
       // @ts-ignore
-      user.processUserNode(node, RED, msg, github);
+      user.processUserNode(node, RED, msg, IGithub);
     });
   }
   RED.nodes.registerType('github-user', GithubUser);

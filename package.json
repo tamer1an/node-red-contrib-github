@@ -20,7 +20,8 @@
     "typescript": "^3.4.3"
   },
   "dependencies": {
-    "github-api": "3.x"
+    "github-api": "3.x",
+    "node-fetch": "^2.6.0"
   },
   "node-red": {
     "nodes": {
