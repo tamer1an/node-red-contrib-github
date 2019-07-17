@@ -1,4 +1,4 @@
-import {GithubInterface} from "./gh/Github";
+import {GithubInterface} from "./git-api-wrapper/";
 
 const processUserNode = async (node: any, RED: any, msg: object, {instance, gh: github}: any) => {
     if(node.action === 'repos') {
