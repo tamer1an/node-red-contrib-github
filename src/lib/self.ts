@@ -1,4 +1,4 @@
-import {GitApiWrapper} from './git-api-wrapper/';
+import { GitApiWrapper } from './git-api-wrapper';
 
 const GithubMyUser = (n: any) => {
     // @ts-ignore

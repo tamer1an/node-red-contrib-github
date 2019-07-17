@@ -1,6 +1,5 @@
 import { NodeProperties, Red, Node } from 'node-red';
-// @ts-ignore
-import {GitApiWrapper} from './git-api-wrapper/';
+import { GitApiWrapper } from './git-api-wrapper';
 
 const GithubRepo = (n: any) => {
     // @ts-ignore
