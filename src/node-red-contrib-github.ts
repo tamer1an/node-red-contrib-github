@@ -1,5 +1,5 @@
 import { NodeProperties, Red, Node } from 'node-red';
-import { GithubInterface } from './lib/gh/Github';
+import { GitApiWrapper } from './lib/git-api-wrapper/';
 import * as user from './lib/user';
 
 // module.exports = function(RED: Red) {
@@ -40,7 +40,7 @@ module.exports = function(RED: any) {
     node.pathto = n.pathto;
     node.pathtoType = n.pathtoType;
       // @ts-ignore
-    const IGithub = new GithubInterface({
+    const IGithub = new GitApiWrapper({
       // @ts-ignore
       token: RED.nodes.getNode(n.github).credentials.token,
     });
@@ -75,7 +75,7 @@ module.exports = function(RED: any) {
     node.orgnameType = n.orgnameType;
 
       // @ts-ignore
-    const IGithub = new GithubInterface({
+    const IGithub = new GitApiWrapper({
       // @ts-ignore
       token: RED.nodes.getNode(n.github).credentials.token,
     });

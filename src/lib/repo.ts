@@ -1,6 +1,6 @@
 import { NodeProperties, Red, Node } from 'node-red';
 // @ts-ignore
-import {GithubInterface} from "./gh/Github";
+import {GitApiWrapper} from './git-api-wrapper/';
 
 const GithubRepo = (n: any) => {
     // @ts-ignore
@@ -23,7 +23,7 @@ const GithubRepo = (n: any) => {
     node.pathto = n.pathto;
     node.pathtoType = n.pathtoType;
     // @ts-ignore
-    const IGithub = new GithubInterface({
+    const IGithub = new GitApiWrapper({
         // @ts-ignore
         token: RED.nodes.getNode(n.github).credentials.token,
     });

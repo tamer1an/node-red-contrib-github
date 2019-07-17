@@ -1,7 +1,4 @@
 // file for testing github-api locally
-
-// @ts-ignore
-import Github from 'github-api';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 

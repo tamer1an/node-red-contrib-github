@@ -1,4 +1,4 @@
-import {GithubInterface} from "./gh/Github";
+import {GitApiWrapper} from './git-api-wrapper/';
 
 const GithubMyUser = (n: any) => {
     // @ts-ignore
@@ -14,7 +14,7 @@ const GithubMyUser = (n: any) => {
     node.orgname = n.orgname;
     node.orgnameType = n.orgnameType;
 
-    const IGithub = new GithubInterface({
+    const IGithub = new GitApiWrapper({
         // @ts-ignore
         token: RED.nodes.getNode(n.github).credentials.token
     });
