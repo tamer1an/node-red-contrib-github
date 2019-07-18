@@ -17,10 +17,9 @@ const processUserNode = async (node: any, RED: any, msg: object, {instance, gh: 
         node.send({ payload });
     } else if(node.action === 'userstarred') {
         const username_f = RED.util.evaluateNodeProperty(node.username, node.usernameType, node, msg);
-        // const { data: payload } = await github.getUser(username_f).listStarredRepos();
-        const payload = await instance.allStars();
+        const [payload] = await instance.allStars(username_f);
         node.status({ text: `items ${payload.length}` });
-        // node.send({ payload });
+        node.send({ payload });
     } else if(node.action === 'createrepo') {
         const options_f = RED.util.evaluateNodeProperty(node.options, node.optionsType, node, msg);
     } else if(node.aciton === 'orgrepos') {

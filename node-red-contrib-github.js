@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var Github_1 = require("./lib/gh/Github");
+var git_api_wrapper_1 = require("./lib/git-api-wrapper/");
 var user = require("./lib/user");
 // module.exports = function(RED: Red) {
 module.exports = function (RED) {
@@ -72,7 +72,7 @@ module.exports = function (RED) {
         node.pathto = n.pathto;
         node.pathtoType = n.pathtoType;
         // @ts-ignore
-        var IGithub = new Github_1.GithubInterface({
+        var IGithub = new git_api_wrapper_1.GitApiWrapper({
             // @ts-ignore
             token: RED.nodes.getNode(n.github).credentials.token
         });
@@ -103,7 +103,7 @@ module.exports = function (RED) {
         node.orgname = n.orgname;
         node.orgnameType = n.orgnameType;
         // @ts-ignore
-        var IGithub = new Github_1.GithubInterface({
+        var IGithub = new git_api_wrapper_1.GitApiWrapper({
             // @ts-ignore
             token: RED.nodes.getNode(n.github).credentials.token
         });

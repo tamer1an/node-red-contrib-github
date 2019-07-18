@@ -39,7 +39,7 @@ module.exports = function(RED: any) {
     node.contentsType = n.contentsType;
     node.pathto = n.pathto;
     node.pathtoType = n.pathtoType;
-      // @ts-ignore
+    // @ts-ignore
     const IGithub = new GitApiWrapper({
       // @ts-ignore
       token: RED.nodes.getNode(n.github).credentials.token,
@@ -74,7 +74,7 @@ module.exports = function(RED: any) {
     node.orgname = n.orgname;
     node.orgnameType = n.orgnameType;
 
-      // @ts-ignore
+    // @ts-ignore
     const IGithub = new GitApiWrapper({
       // @ts-ignore
       token: RED.nodes.getNode(n.github).credentials.token,
