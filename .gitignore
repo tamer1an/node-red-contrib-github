@@ -4,7 +4,8 @@ logs
 *.log
 npm-debug.log*
 ./lib/
-
+.src/lib/mystared.json
+.src/lib/testtxt
 # Runtime data
 pids
 *.pid
