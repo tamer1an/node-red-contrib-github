@@ -1,6 +1,7 @@
 import { NodeProperties, Red, Node } from 'node-red';
 import { GitApiWrapper } from './lib/git-api-wrapper/';
 import * as user from './lib/user';
+import * as self from './lib/self';
 
 // module.exports = function(RED: Red) {
 module.exports = function(RED: any) {
@@ -65,7 +66,6 @@ module.exports = function(RED: any) {
     // @ts-ignore
     const node: any = this;
     RED.nodes.createNode(node, n);
-
     node.action = n.action;
     node.options = n.options;
     node.optionsType = n.optionsType;
@@ -88,8 +88,24 @@ module.exports = function(RED: any) {
 
   function GithubMyUser(n: any) {
     // @ts-ignore
-    const node = this;
+    const node: any = this;
     RED.nodes.createNode(node, n);
+    node.options = n.options;
+    node.optionsType = n.optionsType;
+    node.username = n.username;
+    node.usernameType = n.usernameType;
+    node.orgname = n.orgname;
+    node.orgnameType = n.orgnameType;
+
+    node.action = n.action;
+    const IGithub = new GitApiWrapper({
+      // @ts-ignore
+      token: RED.nodes.getNode(n.github).credentials.token,
+    });
+    node.on('input', async function(msg: { payload: object }) {
+      // @ts-ignore
+      self.processUserNode(node, RED, msg, IGithub);
+    });
   }
   RED.nodes.registerType('github-myuser', GithubMyUser);
 };

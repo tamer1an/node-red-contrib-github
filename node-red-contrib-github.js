@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var git_api_wrapper_1 = require("./lib/git-api-wrapper/");
 var user = require("./lib/user");
+var self = require("./lib/self");
 // module.exports = function(RED: Red) {
 module.exports = function (RED) {
     'use strict';
@@ -122,6 +123,26 @@ module.exports = function (RED) {
         // @ts-ignore
         var node = this;
         RED.nodes.createNode(node, n);
+        node.options = n.options;
+        node.optionsType = n.optionsType;
+        node.username = n.username;
+        node.usernameType = n.usernameType;
+        node.orgname = n.orgname;
+        node.orgnameType = n.orgnameType;
+        node.action = n.action;
+        var IGithub = new git_api_wrapper_1.GitApiWrapper({
+            // @ts-ignore
+            token: RED.nodes.getNode(n.github).credentials.token
+        });
+        node.on('input', function (msg) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    // @ts-ignore
+                    self.processUserNode(node, RED, msg, IGithub);
+                    return [2 /*return*/];
+                });
+            });
+        });
     }
     RED.nodes.registerType('github-myuser', GithubMyUser);
 };
