@@ -8,6 +8,8 @@
         <script src="https://unpkg.com/localforage@1.7.3/dist/localforage.js"></script>
         <script src="https://unpkg.com/dimport/nomodule">
           // Notice that we can use `import` inside a script without "type=module"
+          import preact from 'https://unpkg.com/preact?module';
+          window.preact = preact; 
           import { h, render } from 'https://unpkg.com/preact?module';
           import VirtualList from 'https://unpkg.com/preact-virtual-list@0.3.1/dist/preact-virtual-list.js';
           
