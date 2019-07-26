@@ -3500,7 +3500,16 @@
             <li>RequireJS</li>
           </ul>
         </div>
-	<script nomodule defer src="https://unpkg.com/dimport/nomodule" data-main="/bundle.js"></script>
+
+<script src="https://unpkg.com/dimport/nomodule">
+  // Notice that we can use `import` inside a script without "type=module"
+  import { h, render } from 'https://unpkg.com/preact?module';
+
+  render(
+    h('h1', null, 'Hello world'),
+    document.body
+  );
+</script>
         <!-- endbuild -->
 </body>
 </html>
