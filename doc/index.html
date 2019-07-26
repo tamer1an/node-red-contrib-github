@@ -19,13 +19,13 @@
           fetchData();
             
           render(
-            h('h1', <VirtualList
-                        data={['a', 'b', 'c']}
-                        renderRow={ row => <div>{row}</div> }
-                        rowHeight={22}
-                        overscanCount={10}
-                        sync
-                    />, 'Hello world'),
+            h('VirtualList', {
+                    data:"['a', 'b', 'c']",
+                    renderRow: row => 'test',
+                    rowHeight:22,
+                    overscanCount:10,
+                    sync,
+                }, 'Hello world'),
             document.body
           );
         </script>
