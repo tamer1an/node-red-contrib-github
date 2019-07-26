@@ -1,165 +1,148 @@
-
-module.exports = function(RED) {
-    "use strict";
-
-    function GithubNode(n) {
-        RED.nodes.createNode(this,n);
-        this.name = n.name;
-    }
-    RED.nodes.registerType("github-credentials",GithubNode,{
-      credentials: {
-        token: {type: "password"}
-      }
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
-
-    //REPO NODE
-    function GithubRepo(n){
-        RED.nodes.createNode(this,n);
-        this.github = n.github;
-        this.username = n.username;
-        this.usernameType = n.usernameType;
-        this.repository = n.repository;
-        this.repositoryType = n.repositoryType;
-        this.action = n.action;
-        this.branch = n.branch;
-        this.branchType = n.branchType;
-        this.path = n.path;
-        this.pathType = n.pathType;
-        this.contents = n.contents;
-        this.contentsType = n.contentsType;
-        this.pathto = n.pathto;
-        this.pathtoType = n.pathtoType;
-        var github = new (require('github-api'))({
-          token: RED.nodes.getNode(n.github).credentials.token,
-          auth: "oauth"
-        });
-        this.status({});
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+exports.__esModule = true;
+var git_api_wrapper_1 = require("./lib/git-api-wrapper/");
+var user = require("./lib/user");
+var self = require("./lib/self");
+// module.exports = function(RED: Red) {
+module.exports = function (RED) {
+    'use strict';
+    function GithubNode(n) {
+        // @ts-ignore
         var node = this;
-        this.on('input', function(msg) {
-            node.status({fill:"blue",shape:"ring",text:node.action});
-            var username_f = RED.util.evaluateNodeProperty(node.username,node.usernameType,node,msg);
-            var repository_f = RED.util.evaluateNodeProperty(node.repository,node.repositoryType,node,msg);
+        RED.nodes.createNode(node, n);
+        node.name = n.name;
+    }
+    RED.nodes.registerType('github-credentials', GithubNode, {
+        credentials: {
+            token: { type: 'password' },
+            password: { type: 'password' }
+        }
+    });
+    // @ts-ignore
+    function GithubRepo(n) {
+        // @ts-ignore
+        var node = this;
+        RED.nodes.createNode(node, n);
+        node.github = n.github;
+        node.username = n.username;
+        node.usernameType = n.usernameType;
+        node.repository = n.repository;
+        node.repositoryType = n.repositoryType;
+        node.action = n.action;
+        node.branch = n.branch;
+        node.branchType = n.branchType;
+        node.path = n.path;
+        node.pathType = n.pathType;
+        node.contents = n.contents;
+        node.contentsType = n.contentsType;
+        node.pathto = n.pathto;
+        node.pathtoType = n.pathtoType;
+        // @ts-ignore
+        var IGithub = new git_api_wrapper_1.GitApiWrapper({
+            // @ts-ignore
+            token: RED.nodes.getNode(n.github).credentials.token
+        });
+        // @ts-ignore
+        var github = IGithub.gh;
+        node.status({});
+        node.on('input', function (msg) {
+            node.status({ fill: 'blue', shape: 'ring', text: node.action });
+            var username_f = RED.util.evaluateNodeProperty(node.username, node.usernameType, node, msg);
+            var repository_f = RED.util.evaluateNodeProperty(node.repository, node.repositoryType, node, msg);
             var repo = github.getRepo(username_f, repository_f);
-
-            function callbackErrData(err, data){
-                if(err){
-                    node.status({fill:"red",shape:"dot",text:"Error: " + node.action});
-                    node.error(err);
-                }else{
-                    msg.payload = data;
-                    node.status({});
-                    node.send(msg);
-                }
-            }
-            function callbackErr(err) {
-                if(err){
-                    node.status({fill:"red",shape:"dot",text:"Error" + node.action});
-                    node.error(err);
-                }else{
-                    node.status({});
-                }
-            }
-
-            if(node.action == "show"){
-                repo.show(callbackErrData);
-            }else if (node.action == "fork"){
-                repo.fork(callbackErr);
-            }else if (node.action == "contributors"){
-                repo.contributors(callbackErrData);
-            }else if (node.action == "listforks"){
-                repo.listForks(callbackErrData);
-            }else if (node.action == "listbraches"){
-                repo.listBranches(callbackErrData);
-            }else if (node.action == "delete") {
-                repo.deleteRepo(callbackErrData);
-            }else if (node.action == "contents") {
-                var branch_f = RED.util.evaluateNodeProperty(node.branch,node.branchType,node,msg);
-                var path_f = RED.util.evaluateNodeProperty(node.path,node.pathType,node,msg);
-                repo.contents(branch_f, path_f, callbackErrData);
-            }else if(node.action == "read"){
-                var branch_f = RED.util.evaluateNodeProperty(node.branch,node.branchType,node,msg);
-                var path_f = RED.util.evaluateNodeProperty(node.path,node.pathType,node,msg);
-                repo.read(branch_f, path_f, callbackErrData);
-            }else if (node.action == "write") {
-                var branch_f = RED.util.evaluateNodeProperty(node.branch,node.branchType,node,msg);
-                var path_f = RED.util.evaluateNodeProperty(node.path,node.pathType,node,msg);
-                var contents_f = RED.util.evaluateNodeProperty(node.contents,node.contentsType,node,msg);
-                var options = {};
-                repo.write(branch_f, path_f, contents_f, 'Add ' + path_f, options, callbackErr);
-            }else if (node.action == "move") {
-                var branch_f = RED.util.evaluateNodeProperty(node.branch,node.branchType,node,msg);
-                var path_f = RED.util.evaluateNodeProperty(node.path,node.pathType,node,msg);
-                var pathto_f = RED.util.evaluateNodeProperty(node.pathto,node.pathtoType,node,msg);
-                repo.move(branch_f, path_f, pathto_f, callbackErr);
-            }else if (node.action == "remove") {
-                var branch_f = RED.util.evaluateNodeProperty(node.branch,node.branchType,node,msg);
-                var path_f = RED.util.evaluateNodeProperty(node.path,node.pathType,node,msg);
-                repo.remove(branch_f, path_f, callbackErr);
+            if (node.action === 'show') {
+                node.log('show');
+                node.status({ fill: 'green', shape: 'ring' });
             }
         });
     }
-    RED.nodes.registerType("github-repo", GithubRepo);
-
-
-
-    function GithubUser(n){
-        RED.nodes.createNode(this,n);
-
-        this.action = n.action;
-        this.options = n.options;
-        this.optionsType = n.optionsType;
-        this.username = n.username;
-        this.usernameType = n.usernameType;
-        this.orgname = n.orgname;
-        this.orgnameType = n.orgnameType;
-
-        var github = new (require('github-api'))({
-            token: RED.nodes.getNode(n.github).credentials.token,
-            auth: "oauth"
-        });
-        var user = github.getUser();
+    RED.nodes.registerType('github-repo', GithubRepo);
+    function GithubUser(n) {
+        // @ts-ignore
         var node = this;
-        this.on('input', function(msg) {
-            function callbackErrData(err, data){
-                if(err){
-                    node.error(err);
-                }else{
-                    msg.payload = data;
-                    node.send(msg);
-                }
-            }
-
-            if(node.action == "repos"){
-                var options_f = RED.util.evaluateNodeProperty(node.options,node.optionsType,node,msg);
-                user.repos(options_f, callbackErrData);
-            }else if (node.action == "orgs") {
-                user.orgs(callbackErrData);
-            }else if (node.action == "gists") {
-                user.gists(callbackErrData);
-            }else if (node.action == "notifications") {
-                var options_f = RED.util.evaluateNodeProperty(node.options,node.optionsType,node,msg);
-                user.notifications(options_f, callbackErrData);
-            }else if (node.action == "show") {
-                var username_f = RED.util.evaluateNodeProperty(node.username,node.usernameType,node,msg);
-                user.show(username_f, callbackErrData);
-            }else if (node.action == "userrepos") {
-                var username_f = RED.util.evaluateNodeProperty(node.username,node.usernameType,node,msg);
-                user.userRepos(username_f, callbackErrData);
-            }else if (node.action == "userstarred") {
-                var username_f = RED.util.evaluateNodeProperty(node.username,node.usernameType,node,msg);
-                user.userStarred(username_f, callbackErrData);
-            }else if (node.action == "createrepo") {
-                var options_f = RED.util.evaluateNodeProperty(node.options,node.optionsType,node,msg);
-                user.createRepo(options_f, callbackErrData);
-            }else if (node.aciton == "orgrepos") {
-                var orgname_f = RED.util.evaluateNodeProperty(node.orgname,node.orgnameType,node,msg);
-                user.orgRepos(orgname_f, callbackErrData);
-            }else if (node.action == "usergists") {
-                var username_f = RED.util.evaluateNodeProperty(node.username,node.usernameType,node,msg);
-                user.userGists(username_f, callbackErrData);
-            }
-
+        RED.nodes.createNode(node, n);
+        node.action = n.action;
+        node.options = n.options;
+        node.optionsType = n.optionsType;
+        node.username = n.username;
+        node.usernameType = n.usernameType;
+        node.orgname = n.orgname;
+        node.orgnameType = n.orgnameType;
+        // @ts-ignore
+        var IGithub = new git_api_wrapper_1.GitApiWrapper({
+            // @ts-ignore
+            token: RED.nodes.getNode(n.github).credentials.token
+        });
+        node.on('input', function (msg) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    // @ts-ignore
+                    user.processUserNode(node, RED, msg, IGithub);
+                    return [2 /*return*/];
+                });
+            });
         });
     }
-    RED.nodes.registerType("github-user", GithubUser);
-}
+    RED.nodes.registerType('github-user', GithubUser);
+    function GithubMyUser(n) {
+        // @ts-ignore
+        var node = this;
+        RED.nodes.createNode(node, n);
+        node.options = n.options;
+        node.optionsType = n.optionsType;
+        node.username = n.username;
+        node.usernameType = n.usernameType;
+        node.orgname = n.orgname;
+        node.orgnameType = n.orgnameType;
+        node.action = n.action;
+        var IGithub = new git_api_wrapper_1.GitApiWrapper({
+            // @ts-ignore
+            token: RED.nodes.getNode(n.github).credentials.token
+        });
+        node.on('input', function (msg) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    // @ts-ignore
+                    self.processUserNode(node, RED, msg, IGithub);
+                    return [2 /*return*/];
+                });
+            });
+        });
+    }
+    RED.nodes.registerType('github-myuser', GithubMyUser);
+};

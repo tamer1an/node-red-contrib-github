@@ -1,0 +1,55 @@
+#root {
+  width: 480px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+/* THEME 1 */
+/*.personal > div > label {*/
+  /*width: 30%;*/
+  /*display: block;*/
+  /*margin-right: 45px;*/
+/*}*/
+/*.personal > div > input {*/
+  /*width: 69%;*/
+  /*display: inline-block;*/
+  /*margin-left: 150px;*/
+/*}*/
+/*.personal > div {*/
+  /*width: 400px;*/
+  /*text-align: right;*/
+/*}*/
+/*.personal > div:first-child {*/
+  /*padding-top: 20px;*/
+/*}*/
+/*.personal > div:last-child {*/
+  /*padding-bottom: 20px;*/
+/*}*/
+
+
+.personal > div:first-child {
+  padding-top: 20px;
+}
+.personal > div:last-child {
+  padding-bottom: 20px;
+}
+
+.personal > div {
+  margin: 10px;
+  width: 95%;
+  text-align: right;
+}
+
+input:invalid {
+  border: 1px solid red;
+}
+
+.form__input {
+  margin-left: 10px;
+}
+
+#picFile {
+  width: 510px;
+  position: relative;
+  left: 190px;
+  top: -41px;
+}

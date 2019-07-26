@@ -1,8 +1,11 @@
+.idea
 # Logs
 logs
 *.log
 npm-debug.log*
-
+/lib/
+/src/lib/**/mystarred.json
+/src/lib/**/test.txt
 # Runtime data
 pids
 *.pid
