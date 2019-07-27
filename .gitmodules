@@ -1,3 +1,6 @@
 [submodule "src/lib/git-api-wrapper"]
 	path = src/lib/git-api-wrapper
 	url = https://github.com/tamer1an/git-api-wrapper.git
+[submodule "doc/MUI-FORM"]
+	path = doc/MUI-FORM
+	url = https://github.com/tamer1an/MUI-FORM.git
