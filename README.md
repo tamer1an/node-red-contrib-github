@@ -2,7 +2,7 @@
 Interacts with Github using [node-red](http://nodered.org/) and Internet of things.
 
 This is a wrapper around [github-api](https://www.npmjs.com/package/github-api). Check it out for more info.
-
+git clone --recurse-submodules
 ##Install
 
 
